@@ -18,12 +18,32 @@
         </div>
         <div class="form-field">
           <label>Room Name</label>
-          <input type="text" name="room"/>
+          <input id="room-field" type="text" name="room"/>
+        </div>
+        <div class="form-field">
+          <label>Available Rooms</label>
+          <select id="available-rooms" onchange="getSelectValue();">
+          </select>
         </div>
         <div class="form-field">
           <button>Join</button>
         </div>
       </form>
     </div>
+    <script>
+      function getSelectValue() {
+        var selectValue = document.getElementById("available-rooms").value;
+        document.getElementById("room-field").value = selectValue;
+      }
+    </script>
+    <script id="availableRooms" type="text/template">
+        <option value="{{room}}" name="room">{{room}}</option>
+    </script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/libs/jquery-3.3.1.min.js"></script>
+    <script src="/js/libs/moment.js"></script>
+    <script src="/js/libs/mustache.js"></script>
+    <script src="/js/libs/deparam.js"></script>
+    <script src="/js/index.js"></script>
   </body>
 </html>

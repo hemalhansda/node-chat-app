@@ -17,7 +17,11 @@ app.use(express.static(publicPath));
 
 io.on('connection', (socket) => {
   console.log('New user connected');
-
+  socket.on('newUser', (params, callback) => {
+    //console.log('Hey there');
+    socket.emit('newMessages', users.getAllRoom());
+    callback();
+  });
   socket.on('join', (params, callback) => {
     if(!isRealString(params.name) || !isRealString(params.room)){
       return callback('Name and room are required');
@@ -30,9 +34,9 @@ io.on('connection', (socket) => {
     io.to(params.room).emit('updateUserList', users.getUserList(params.room));
     socket.emit('newMessage', generateMessage('Admin', 'Welcome to DoChat :-)'));
     socket.broadcast.to(params.room).emit('newMessage', generateMessage('Admin', `${params.name} has joined.`));
-
     callback();
   });
+
 
   socket.on('createMessage', (message , callback) => {
     var user = users.getUser(socket.id);
