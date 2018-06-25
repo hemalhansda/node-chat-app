@@ -17,13 +17,20 @@ socket.on('connect', function () {
 socket.on('newMessages', function (roomsArray) {
   console.log(roomsArray.length);
   if(roomsArray.length===0){
-    var template = jQuery('#availableRooms').html();
+    var template = jQuery('#notifiTemplate2').html();
     var html = Mustache.render(template, {
-           room: 'No Rooms Available'
+           avroom: 'No Rooms Available'
     });
 
-    jQuery('#available-rooms').append(html);
+    jQuery('#avRooms').append(html);
   } else {
+    var template2 = jQuery('#notifiTemplate').html();
+    var html = Mustache.render(template2, {
+           avroom: 'Rooms Available ↓'
+    });
+
+    jQuery('#avRooms').append(html);
+
     var rooms = [];
     var c;
     var d;

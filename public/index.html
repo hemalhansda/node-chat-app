@@ -21,8 +21,9 @@
           <input id="room-field" type="text" name="room"/>
         </div>
         <div class="form-field">
-          <label>Available Rooms</label>
+          <label id="avRooms"></label>
           <select id="available-rooms" onchange="getSelectValue();">
+            <option></option>
           </select>
         </div>
         <div class="form-field">
@@ -38,6 +39,12 @@
     </script>
     <script id="availableRooms" type="text/template">
         <option value="{{room}}" name="room">{{room}}</option>
+    </script>
+    <script id="notifiTemplate" type="text/template">
+        {{avroom}}
+    </script>
+    <script id="notifiTemplate2" type="text/template">
+        <font color="red">{{avroom}}</font>
     </script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/js/libs/jquery-3.3.1.min.js"></script>
