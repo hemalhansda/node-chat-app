@@ -19,7 +19,7 @@ io.on('connection', (socket) => {
   console.log('New user connected');
   socket.on('newUser', (params, callback) => {
     //console.log('Hey there');
-    socket.emit('newMessages', users.getAllRoom());
+    socket.emit('allRooms', users.getAllRoom());
     callback();
   });
   socket.on('join', (params, callback) => {

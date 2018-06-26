@@ -14,7 +14,7 @@ socket.on('connect', function () {
   });
 });
 
-socket.on('newMessages', function (roomsArray) {
+socket.on('allRooms', function (roomsArray) {
   console.log(roomsArray.length);
   if(roomsArray.length===0){
     var template = jQuery('#notifiTemplate2').html();
