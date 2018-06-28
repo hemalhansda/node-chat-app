@@ -22,6 +22,11 @@ io.on('connection', (socket) => {
     socket.emit('allRooms', users.getAllRoom());
     callback();
   });
+
+  socket.on("typing", (params, callback) => {
+    socket.broadcast.to(params.room).emit("typing", params.name);
+  });
+
   socket.on('join', (params, callback) => {
     if(!isRealString(params.name) || !isRealString(params.room)){
       return callback('Name and room are required');

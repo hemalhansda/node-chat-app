@@ -1,5 +1,9 @@
 var socket = io();
 
+var msg = document.getElementById("msg");
+var person;
+var output = document.getElementById("messageType");
+
 function scrollToBottom () {
   // Selectors
   var messages = jQuery('#messages');
@@ -30,6 +34,7 @@ socket.on('connect', function () {
   });
 });
 
+
 socket.on('disconnect', function () {
   console.log('Disconnected from server');
 });
@@ -38,13 +43,23 @@ socket.on('updateUserList', function (users) {
   var ol = jQuery('<ol></ol>');
 
   users.forEach(function (user) {
-    ol.append(jQuery('<li></li>').text(user));
+    ol.append(jQuery('<li id="person"></li>').text(user));
   });
 
   jQuery('#users').html(ol);
 });
 
+msg.addEventListener("keypress", function(){
+  var params = jQuery.deparam(window.location.search);
+  socket.emit("typing", params, person);
+});
+
+socket.on("typing", function(data){
+  output.innerHTML="<p "+"style="+"\"color: #6b6b6b; font-family: 'Dancing Script', cursive;\""+">" + data + " is typing....</p>";
+});
+
 socket.on('newMessage', function (message) {
+  output.innerHTML="";
   var formattedTime = moment(message.createdAt).format('h:mm a');
   var template = jQuery('#message-template').html();
   var html = Mustache.render(template, {
@@ -52,15 +67,9 @@ socket.on('newMessage', function (message) {
     from: message.from,
     createdAt: formattedTime
   });
-
+  person = message.from;
   jQuery('#messages').append(html);
   scrollToBottom();
-
-
-  // var li = jQuery('<li></li>');
-  // li.text(`${message.from} ${formattedTime}: ${message.text}`);
-  //
-  // jQuery('#messages').append(li);
 });
 
 socket.on('newLocationMessage', function (message) {
@@ -74,13 +83,6 @@ socket.on('newLocationMessage', function (message) {
 
   jQuery('#messages').append(html);
   scrollToBottom();
-  // var li = jQuery('<li></li>');
-  // var formattedTime = moment(message.createdAt).format('h:mm a');
-  // var a = jQuery('<a target="_black">My current location</a>');
-  // li.text(`${message.from} ${formattedTime}: `);
-  // a.attr('href', message.url);
-  // li.append(a);
-  // jQuery('#messages').append(li);
 });
 
 jQuery('#message-form').on('submit', function (e) {

@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <title>Chat | DoChat</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <link href="https://fonts.googleapis.com/css?family=Dancing+Script" rel="stylesheet">
     <link rel="stylesheet" href="/css/styles.css">
   </head>
   <body class="chat">
@@ -16,10 +17,10 @@
 
     <div class="chat__main">
       <ol id="messages" class="chat__messages"></ol>
-
+      <div id="messageType" style="padding: 20px;font-family: 'Dancing Script', cursive;"></div>
       <div class="chat__footer">
         <form id="message-form">
-          <input name="message" type="text" placeholder="Message" autofocus autocomplete="off"/>
+          <input id="msg" name="message" type="text" placeholder="Message" autofocus autocomplete="off"/>
           <button>Send</button>
         </form>
         <button id="send-location">Send location</button>
@@ -49,7 +50,9 @@
         </div>
       </li>
     </script>
-
+    <script id="message-typing" type="text/template">
+      {{typingM}}
+    </script>
     <script src="/socket.io/socket.io.js"></script>
     <script src="/js/libs/jquery-3.3.1.min.js"></script>
     <script src="/js/libs/moment.js"></script>
